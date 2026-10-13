@@ -1,11 +1,13 @@
 {
-  "name": "akfu-frontend",
+  "name": "akfu-platform",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev:backend": "tsx backend.ts",
+    "build": "tsc backend.ts --ignoreConfig --target es2020 --module commonjs --esModuleInterop --allowSyntheticDefaultImports --skipLibCheck --strict false --outDir . && next build",
+    "start": "node backend.js",
+    "start:next": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -13,7 +15,8 @@
     "react-dom": "^18.3.1",
     "next": "^14.0.0",
     "zustand": "^4.4.7",
-    "axios": "^1.6.5"
+    "axios": "^1.6.5",
+    "hono": "^4.0.0"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
@@ -22,6 +25,7 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
-    "tailwindcss": "^3.4.0"
+    "tailwindcss": "^3.4.0",
+    "tsx": "^4.0.0"
   }
 }
