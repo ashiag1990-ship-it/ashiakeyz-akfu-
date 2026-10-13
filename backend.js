@@ -1,3 +1,4 @@
+import http from "http";
 import Hono from "hono";
 import { cors } from "hono/cors";
 import crypto from "crypto";
@@ -99,8 +100,8 @@ app.post("/api/course/login", async (c) => {
     const token = makeToken(email);
     return c.json({
       token,
-      email: student.email,
-      name: student.name || email,
+      email,
+      message: "Login successful",
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -118,26 +119,27 @@ app.post("/api/course/set-password", async (c) => {
       return c.json({ error: "Email and password required" }, 400);
     }
 
+    if (password.length < 6) {
+      return c.json({ error: "Password must be at least 6 characters" }, 400);
+    }
+
     const passwordHash = crypto.createHmac("sha256", SECRET).update(password).digest("base64");
 
     students.set(email, {
-      id: email,
       email,
       password: passwordHash,
-      name: email,
-      created: Date.now(),
+      created_at: Date.now(),
     });
 
     const token = makeToken(email);
     return c.json({
       token,
       email,
-      name: email,
       message: "Password set successfully",
     });
   } catch (error) {
     console.error("Set password error:", error);
-    return c.json({ error: "Failed to set password" }, 500);
+    return c.json({ error: "Password setup failed" }, 500);
   }
 });
 
@@ -256,11 +258,21 @@ app.post("/admin/setup-db", async (c) => {
   }
 });
 
-// Start server
+// Create Node.js HTTP server with Hono
 const port = Number(process.env.PORT || 3000);
-console.log(`Starting backend on port ${port}...`);
 
-export default {
-  port,
-  fetch: app.fetch,
-};
+const server = http.createServer(app.fetch);
+
+server.listen(port, () => {
+  console.log(`✅ Backend running on port ${port}`);
+  console.log(`Health check: http://localhost:${port}/health`);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, closing server...');
+  server.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+});
