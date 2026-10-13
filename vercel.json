@@ -1,6 +1,6 @@
 {
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://intuitive-bravery-production-eba9.up.railway.app"
+    "NEXT_PUBLIC_API_URL": "https://ashiakeyz-akfu-production.up.railway.app"
   },
   "buildCommand": "npm run build",
   "outputDirectory": ".next"
