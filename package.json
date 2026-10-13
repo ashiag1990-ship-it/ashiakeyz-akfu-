@@ -3,21 +3,15 @@
   "version": "1.0.0",
   "description": "AKFU - Ashia Keyz Film University",
   "type": "module",
-  "main": "backend.ts",
+  "main": "backend.js",
   "scripts": {
-    "build": "tsc backend.ts --target es2020 --module es2020 --moduleResolution node --esModuleInterop --allowSyntheticDefaultImports --outDir dist",
-    "dev": "node dist/backend.js",
-    "start": "node dist/backend.js",
-    "prestart": "npm run build"
+    "build": "echo 'Backend pre-compiled'",
+    "start": "node backend.js"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
     "hono": "^4.0.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.3.3",
-    "@types/node": "^20.0.0"
   }
 }
