@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-akfu-dark text-white;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  button {
+    @apply font-medium;
+  }
+
+  input,
+  textarea,
+  select {
+    @apply transition-colors;
+  }
+}
+
+@layer components {
+  /* Hero Text Gradient */
+  .hero-gradient {
+    @apply bg-gradient-to-r from-akfu-cyan via-akfu-purple to-akfu-gold bg-clip-text text-transparent;
+  }
+
+  /* Card Base */
+  .card {
+    @apply bg-akfu-purple/50 border border-akfu-purple rounded-lg p-6 backdrop-blur-sm;
+  }
+
+  .card-dark {
+    @apply bg-akfu-dark border border-akfu-purple rounded-lg p-6;
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    @apply px-6 py-2 bg-gradient-to-r from-akfu-cyan to-akfu-gold text-akfu-dark font-bold rounded hover:shadow-lg hover:shadow-akfu-cyan/50 transition-all;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-2 bg-akfu-purple border border-akfu-cyan text-akfu-cyan font-bold rounded hover:bg-akfu-cyan hover:text-akfu-dark transition-all;
+  }
+
+  .btn-outline {
+    @apply px-6 py-2 border-2 border-akfu-cyan text-akfu-cyan font-bold rounded hover:bg-akfu-cyan hover:text-akfu-dark transition-all;
+  }
+
+  /* Input Styles */
+  .input-field {
+    @apply bg-akfu-dark border border-akfu-purple rounded px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-akfu-cyan transition-colors;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold;
+  }
+
+  .badge-cyan {
+    @apply badge bg-akfu-cyan/20 text-akfu-cyan;
+  }
+
+  .badge-gold {
+    @apply badge bg-akfu-gold/20 text-akfu-gold;
+  }
+
+  .badge-purple {
+    @apply badge bg-akfu-purple/20 text-akfu-purple;
+  }
+
+  /* Divider */
+  .divider {
+    @apply border-t border-akfu-purple my-6;
+  }
+
+  /* Section Header */
+  .section-header {
+    @apply text-2xl md:text-3xl font-bold mb-6 hero-gradient;
+  }
+
+  /* Focus States */
+  .focus-cyan {
+    @apply focus:outline-none focus:ring-2 focus:ring-akfu-cyan focus:ring-offset-2 focus:ring-offset-akfu-dark;
+  }
+}
+
+@layer utilities {
+  /* Text Utilities */
+  .text-gradient {
+    @apply bg-gradient-to-r from-akfu-cyan to-akfu-gold bg-clip-text text-transparent;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl;
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-xl border border-white/5 rounded-xl;
+  }
+
+  /* Animations */
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(0, 217, 255, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(0, 217, 255, 0.8);
+    }
+  }
+
+  /* Gradient Animation */
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Hover Scale */
+  .hover-scale {
+    @apply transition-transform hover:scale-105;
+  }
+
+  /* Smooth Transition */
+  .smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Grid Auto Layout */
+  .grid-auto-fit {
+    @apply grid gap-4 auto-cols-max;
+  }
+
+  /* Center Content */
+  .center-content {
+    @apply flex items-center justify-center;
+  }
+
+  /* Responsive Container */
+  .container-responsive {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0e27;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #00d9ff, #d4af37);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to right, #2d1b4e, #00d9ff);
+}
+
+/* Selection Color */
+::selection {
+  background-color: #00d9ff;
+  color: #0a0e27;
+}
+
+::-moz-selection {
+  background-color: #00d9ff;
+  color: #0a0e27;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+
+  a {
+    @apply text-blue-600;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
