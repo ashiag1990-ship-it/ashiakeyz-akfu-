@@ -1,0 +1,33 @@
+{
+  "name": "akfu-backend",
+  "version": "1.0.0",
+  "description": "AKFU Backend - Student integration management and API proxy",
+  "type": "module",
+  "main": "backend.ts",
+  "scripts": {
+    "dev": "bun run backend.ts",
+    "start": "bun run backend.ts",
+    "build": "esbuild backend.ts --bundle --platform=node --target=node18 --outfile=backend.js",
+    "prod": "node backend.js"
+  },
+  "dependencies": {
+    "hono": "^4.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "keywords": [
+    "akfu",
+    "backend",
+    "hono",
+    "api",
+    "integrations"
+  ],
+  "author": "Ashia Keyz Studios",
+  "license": "PROPRIETARY"
+}
