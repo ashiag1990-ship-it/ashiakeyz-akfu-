@@ -1,1 +1,1 @@
-web: bun run backend.ts
+web: npm start

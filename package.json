@@ -5,18 +5,19 @@
   "type": "module",
   "main": "backend.ts",
   "scripts": {
-    "dev": "bun run backend.ts",
-    "start": "bun run backend.ts",
-    "build": "echo 'No build needed - Bun runs TypeScript directly'"
+    "build": "tsc backend.ts --target es2020 --module es2020 --moduleResolution node --esModuleInterop --allowSyntheticDefaultImports --outDir dist",
+    "dev": "node dist/backend.js",
+    "start": "node dist/backend.js",
+    "prestart": "npm run build"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "bun": ">=1.0.0"
+    "node": ">=18.0.0"
   },
-  "keywords": ["akfu", "backend", "hono"],
-  "author": "Ashia Keyz Studios",
-  "license": "PROPRIETARY",
   "dependencies": {
     "hono": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.0.0"
   }
 }
