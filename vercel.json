@@ -1,0 +1,7 @@
+{
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://optimistic-radiance-production-ca86.up.railway.app"
+  },
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next"
+}
