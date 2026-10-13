@@ -6,12 +6,19 @@ import { Sidebar } from '@/components/Sidebar'
 import { SunoGenerator } from '@/components/SunoGenerator'
 import { ElevenLabsRecorder } from '@/components/ElevenLabsRecorder'
 import { AudioMixer } from '@/components/AudioMixer'
-import { getStation, createAudioAsset, getAudioAssets } from '@/lib/api'
+import { AccountRequiredModal } from '@/components/AccountRequiredModal'
+import { getStation, createAudioAsset, getAudioAssets, apiCall } from '@/lib/api'
 import { Station, AudioAsset, SunoClip } from '@/types'
 import { useParams } from 'next/navigation'
 import { useAudio } from '@/store/useAudio'
 import { useProject } from '@/store/useProject'
 import { useProgress } from '@/store/useProgress'
+
+interface UserIntegrations {
+  suno_api_key?: string
+  elevenlabs_api_key?: string
+  higgsfield_account?: string
+}
 
 export default function StationPage() {
   const params = useParams()
@@ -22,6 +29,8 @@ export default function StationPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'song' | 'voiceover' | 'mixer'>(
     'overview'
   )
+  const [integrations, setIntegrations] = useState<UserIntegrations>({})
+  const [requiredAccount, setRequiredAccount] = useState<'suno' | 'elevenlabs' | 'higgsfield' | null>(null)
 
   const { setAudioAssets, audioAssets } = useAudio()
   const { currentProject } = useProject()
@@ -50,8 +59,20 @@ export default function StationPage() {
       }
     }
 
+    const loadIntegrations = async () => {
+      if (!currentProject?.id) return
+
+      try {
+        const data = await apiCall(`/api/integrations/${currentProject.id}`)
+        setIntegrations(data || {})
+      } catch (error) {
+        console.error('Failed to load integrations:', error)
+      }
+    }
+
     loadStationData()
     loadAudioAssets()
+    loadIntegrations()
   }, [stationId, currentProject?.id, setAudioAssets])
 
   const handleSongGenerated = async (clip: SunoClip) => {
@@ -211,13 +232,27 @@ export default function StationPage() {
 
               {activeTab === 'song' && (
                 <div>
-                  <SunoGenerator onSongGenerated={handleSongGenerated} />
+                  {!integrations.suno_api_key ? (
+                    <AccountRequiredModal
+                      service="suno"
+                      onDismiss={() => setRequiredAccount(null)}
+                    />
+                  ) : (
+                    <SunoGenerator onSongGenerated={handleSongGenerated} />
+                  )}
                 </div>
               )}
 
               {activeTab === 'voiceover' && (
                 <div>
-                  <ElevenLabsRecorder onVoiceoverGenerated={handleVoiceoverGenerated} />
+                  {!integrations.elevenlabs_api_key ? (
+                    <AccountRequiredModal
+                      service="elevenlabs"
+                      onDismiss={() => setRequiredAccount(null)}
+                    />
+                  ) : (
+                    <ElevenLabsRecorder onVoiceoverGenerated={handleVoiceoverGenerated} />
+                  )}
                 </div>
               )}
 
@@ -227,6 +262,13 @@ export default function StationPage() {
                 </div>
               )}
             </div>
+
+            {requiredAccount && (
+              <AccountRequiredModal
+                service={requiredAccount}
+                onDismiss={() => setRequiredAccount(null)}
+              />
+            )}
           </div>
         </main>
       </div>
