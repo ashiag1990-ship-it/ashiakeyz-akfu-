@@ -1,0 +1,15 @@
+{
+  "name": "akfu-backend",
+  "version": "1.0.0",
+  "description": "AKFU Platform Backend",
+  "main": "akfu-backend.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run akfu-backend.ts",
+    "dev": "bun run akfu-backend.ts"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "bun": "latest"
+  }
+}
